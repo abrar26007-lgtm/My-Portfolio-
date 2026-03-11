@@ -163,7 +163,9 @@ def admin_dashboard():
     cur.execute("SELECT * FROM messages ORDER BY created_at DESC LIMIT 5"); recent_msgs = cur.fetchall()
     cur.execute("""SELECT DATE(visited_at) as day, COUNT(*) as cnt FROM visits
         WHERE visited_at >= CURRENT_DATE - INTERVAL '7 days'
-        GROUP BY DATE(visited_at) ORDER BY day"""); visit_chart = cur.fetchall()
+        GROUP BY DATE(visited_at) ORDER BY day""")
+    visit_chart_raw = cur.fetchall()
+    visit_chart = [{'day': str(row['day']), 'cnt': row['cnt']} for row in visit_chart_raw]
     cur.close(); db.close()
     return render_template('admin/dashboard.html',
         profile=profile, skills_count=skills_count,
@@ -336,7 +338,8 @@ def admin_visits():
     cur.execute("SELECT COUNT(*) as c FROM visits WHERE DATE(visited_at)=CURRENT_DATE"); today = cur.fetchone()['c']
     cur.execute("SELECT COUNT(*) as c FROM visits WHERE visited_at>=CURRENT_DATE - INTERVAL '7 days'"); week = cur.fetchone()['c']
     cur.execute("""SELECT DATE(visited_at) as day, COUNT(*) as cnt FROM visits
-        GROUP BY DATE(visited_at) ORDER BY day DESC LIMIT 30"""); by_day = cur.fetchall()
+        GROUP BY DATE(visited_at) ORDER BY day DESC LIMIT 30""")
+    by_day = [{'day': str(row['day']), 'cnt': row['cnt']} for row in cur.fetchall()]
     cur.execute("""SELECT ip, COUNT(*) as cnt FROM visits
         GROUP BY ip ORDER BY cnt DESC LIMIT 20"""); by_ip = cur.fetchall()
     cur.execute("SELECT * FROM visits ORDER BY visited_at DESC LIMIT 50"); recent = cur.fetchall()
