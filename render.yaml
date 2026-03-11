@@ -1,0 +1,9 @@
+services:
+  - type: web
+    name: myportfolio
+    runtime: python
+    buildCommand: pip install -r requirements.txt && python create_db.py
+    startCommand: python main.py
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.0
