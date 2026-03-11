@@ -1,0 +1,105 @@
+{% extends 'admin/base.html' %}
+{% block title %}Edit Profile{% endblock %}
+{% block page_title %}Edit Profile{% endblock %}
+{% block content %}
+<form method="POST" enctype="multipart/form-data">
+
+  <div class="card">
+    <div class="card-title">👤 Basic Information</div>
+    <div class="form-row">
+      <div class="field"><label>Full Name</label><input type="text" name="name" value="{{ profile['name'] or '' }}" required></div>
+      <div class="field"><label>Professional Title</label><input type="text" name="title" value="{{ profile['title'] or '' }}" placeholder="Full Stack Developer"></div>
+      <div class="field"><label>Blood Group 🩸</label>
+        <select name="blood_group">
+          <option value="">Select...</option>
+          {% for bg in ['A+','A-','B+','B-','AB+','AB-','O+','O-'] %}
+          <option value="{{ bg }}" {% if profile['blood_group']==bg %}selected{% endif %}>{{ bg }}</option>
+          {% endfor %}
+        </select>
+      </div>
+      <div class="field"><label>Location</label><input type="text" name="location" value="{{ profile['location'] or '' }}" placeholder="Dhaka, Bangladesh"></div>
+      <div class="field full"><label>Tagline</label><input type="text" name="tagline" value="{{ profile['tagline'] or '' }}" placeholder="Short catchy headline..."></div>
+      <div class="field full"><label>Bio / About Me</label><textarea name="bio" rows="5">{{ profile['bio'] or '' }}</textarea></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📸 Profile Photo</div>
+    <div class="photo-upload-area">
+      {% if profile['photo'] %}
+      <img src="{{ url_for('static', filename='uploads/' + profile['photo']) }}" class="photo-preview" id="photoPreview">
+      {% else %}
+      <div class="photo-placeholder" id="photoPreview"><span>👤</span></div>
+      {% endif %}
+      <div>
+        <input type="file" name="photo" id="photoInput" accept="image/*">
+        <p class="hint">JPG, PNG, WEBP — Max 5MB</p>
+      </div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📬 Contact Info</div>
+    <div class="form-row">
+      <div class="field"><label>Email</label><input type="email" name="email" value="{{ profile['email'] or '' }}"></div>
+      <div class="field"><label>Phone</label><input type="text" name="phone" value="{{ profile['phone'] or '' }}"></div>
+      <div class="field"><label>Personal Website</label><input type="url" name="website" value="{{ profile['website'] or '' }}" placeholder="https://..."></div>
+      <div class="field"><label>Resume / CV Link</label><input type="text" name="resume" value="{{ profile['resume'] or '' }}" placeholder="Google Drive link..."></div>
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🌐 Social Media Links</div>
+    <p class="hint" style="margin-bottom:1.5rem">শুধু যেগুলো আছে সেগুলো দিন — বাকিগুলো website এ দেখাবে না।</p>
+
+    <div class="social-group">
+      <div class="social-group-title">👨‍💻 Developer</div>
+      <div class="form-row">
+        <div class="field"><label><span class="sil" style="background:#24292e;color:#fff">GH</span> GitHub</label><input type="url" name="github" value="{{ profile['github'] or '' }}" placeholder="https://github.com/username"></div>
+        <div class="field"><label><span class="sil" style="background:#f48024;color:#fff">SO</span> Stack Overflow</label><input type="url" name="stackoverflow" value="{{ profile['stackoverflow'] or '' }}" placeholder="https://stackoverflow.com/users/..."></div>
+        <div class="field"><label><span class="sil" style="background:#0055cc;color:#fff">HN</span> Hashnode</label><input type="url" name="hashnode" value="{{ profile['hashnode'] or '' }}" placeholder="https://hashnode.com/@username"></div>
+        <div class="field"><label><span class="sil" style="background:#000;color:#fff">MD</span> Medium</label><input type="url" name="medium" value="{{ profile['medium'] or '' }}" placeholder="https://medium.com/@username"></div>
+      </div>
+    </div>
+
+    <div class="social-group">
+      <div class="social-group-title">💼 Professional & Freelance</div>
+      <div class="form-row">
+        <div class="field"><label><span class="sil" style="background:#0077b5;color:#fff">in</span> LinkedIn</label><input type="url" name="linkedin" value="{{ profile['linkedin'] or '' }}" placeholder="https://linkedin.com/in/username"></div>
+        <div class="field"><label><span class="sil" style="background:#1dbf73;color:#fff">FV</span> Fiverr</label><input type="url" name="fiverr" value="{{ profile['fiverr'] or '' }}" placeholder="https://fiverr.com/username"></div>
+        <div class="field"><label><span class="sil" style="background:#6fda44;color:#000">UP</span> Upwork</label><input type="url" name="upwork" value="{{ profile['upwork'] or '' }}" placeholder="https://upwork.com/freelancers/..."></div>
+      </div>
+    </div>
+
+    <div class="social-group">
+      <div class="social-group-title">🎨 Design</div>
+      <div class="form-row">
+        <div class="field"><label><span class="sil" style="background:#1769ff;color:#fff">BE</span> Behance</label><input type="url" name="behance" value="{{ profile['behance'] or '' }}" placeholder="https://behance.net/username"></div>
+        <div class="field"><label><span class="sil" style="background:#ea4c89;color:#fff">DR</span> Dribbble</label><input type="url" name="dribbble" value="{{ profile['dribbble'] or '' }}" placeholder="https://dribbble.com/username"></div>
+      </div>
+    </div>
+
+    <div class="social-group">
+      <div class="social-group-title">📱 Social Media</div>
+      <div class="form-row">
+        <div class="field"><label><span class="sil" style="background:#1877f2;color:#fff">FB</span> Facebook</label><input type="url" name="facebook" value="{{ profile['facebook'] or '' }}" placeholder="https://facebook.com/username"></div>
+        <div class="field"><label><span class="sil" style="background:#e1306c;color:#fff">IG</span> Instagram</label><input type="url" name="instagram" value="{{ profile['instagram'] or '' }}" placeholder="https://instagram.com/username"></div>
+        <div class="field"><label><span class="sil" style="background:#000;color:#fff">𝕏</span> Twitter / X</label><input type="url" name="twitter" value="{{ profile['twitter'] or '' }}" placeholder="https://twitter.com/username"></div>
+        <div class="field"><label><span class="sil" style="background:#ff0000;color:#fff">YT</span> YouTube</label><input type="url" name="youtube" value="{{ profile['youtube'] or '' }}" placeholder="https://youtube.com/@channel"></div>
+        <div class="field"><label><span class="sil" style="background:#000;color:#fff">TT</span> TikTok</label><input type="url" name="tiktok" value="{{ profile['tiktok'] or '' }}" placeholder="https://tiktok.com/@username"></div>
+      </div>
+    </div>
+
+    <div class="social-group">
+      <div class="social-group-title">💬 Messaging</div>
+      <div class="form-row">
+        <div class="field"><label><span class="sil" style="background:#229ed9;color:#fff">TG</span> Telegram</label><input type="url" name="telegram" value="{{ profile['telegram'] or '' }}" placeholder="https://t.me/username"></div>
+        <div class="field"><label><span class="sil" style="background:#25d366;color:#fff">WA</span> WhatsApp</label><input type="url" name="whatsapp" value="{{ profile['whatsapp'] or '' }}" placeholder="https://wa.me/8801700000000"></div>
+        <div class="field"><label><span class="sil" style="background:#5865f2;color:#fff">DC</span> Discord</label><input type="url" name="discord" value="{{ profile['discord'] or '' }}" placeholder="https://discord.gg/invite"></div>
+      </div>
+    </div>
+  </div>
+
+  <button type="submit" class="btn-primary">💾 Save All Changes →</button>
+</form>
+{% endblock %}

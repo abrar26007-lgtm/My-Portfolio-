@@ -1,0 +1,71 @@
+{% extends 'admin/base.html' %}
+{% block title %}Education{% endblock %}
+{% block page_title %}Education{% endblock %}
+{% block content %}
+<div class="page-header">
+  <h1>🎓 Education</h1>
+  <p>কোথায় পড়েছেন, কি পাস করেছেন</p>
+</div>
+<div class="two-col">
+  <div class="card">
+    <div class="card-title">➕ Add Education</div>
+    <form method="POST">
+      <input type="hidden" name="action" value="add">
+      <div class="form-row">
+        <div class="field full">
+          <label>Institution Name</label>
+          <input type="text" name="institution" placeholder="Dhaka University, BUET..." required>
+        </div>
+        <div class="field">
+          <label>Degree</label>
+          <input type="text" name="degree" placeholder="BSc, HSC, SSC, Masters..." required>
+        </div>
+        <div class="field">
+          <label>Subject / Department</label>
+          <input type="text" name="field" placeholder="Computer Science, Science...">
+        </div>
+        <div class="field">
+          <label>Duration</label>
+          <input type="text" name="duration" placeholder="2018 – 2022" required>
+        </div>
+        <div class="field">
+          <label>Result / GPA / Grade</label>
+          <input type="text" name="result" placeholder="GPA 5.00 / CGPA 3.8 / A+">
+        </div>
+        <div class="field full">
+          <label>Description (optional)</label>
+          <textarea name="description" rows="3" placeholder="Extra info..."></textarea>
+        </div>
+        <div class="field">
+          <label>Order (higher = top)</label>
+          <input type="number" name="order_num" value="1">
+        </div>
+      </div>
+      <button type="submit" class="btn-primary" style="margin-top:0.75rem">Add Education →</button>
+    </form>
+  </div>
+
+  <div class="card">
+    <div class="card-title">📋 All Education ({{ education|length }})</div>
+    {% if education %}
+    <div class="item-list">
+      {% for e in education %}
+      <div class="item-row" style="align-items:flex-start;flex-wrap:wrap">
+        <div class="item-info" style="flex-direction:column;align-items:flex-start">
+          <strong>{{ e['degree'] }} — {{ e['institution'] }}</strong>
+          <p>{{ e['field'] }} | {{ e['duration'] }}{% if e['result'] %} | {{ e['result'] }}{% endif %}</p>
+        </div>
+        <form method="POST">
+          <input type="hidden" name="action" value="delete">
+          <input type="hidden" name="id" value="{{ e['id'] }}">
+          <button type="submit" class="btn-delete" onclick="return confirm('Delete?')">✕</button>
+        </form>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}
+    <div class="empty">No education added yet.</div>
+    {% endif %}
+  </div>
+</div>
+{% endblock %}

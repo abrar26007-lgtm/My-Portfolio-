@@ -1,0 +1,63 @@
+{% extends 'admin/base.html' %}
+{% block title %}Visitors{% endblock %}
+{% block page_title %}Visitor Tracking{% endblock %}
+{% block content %}
+
+<div class="stats-grid">
+  <div class="stat-card"><div class="stat-icon">👁️</div><div class="stat-num" style="color:var(--accent)">{{ total }}</div><div class="stat-label">Total Visits</div></div>
+  <div class="stat-card"><div class="stat-icon">📅</div><div class="stat-num" style="color:var(--green)">{{ today }}</div><div class="stat-label">Today</div></div>
+  <div class="stat-card"><div class="stat-icon">📆</div><div class="stat-num">{{ week }}</div><div class="stat-label">This Week</div></div>
+</div>
+
+{% if by_day %}
+<div class="card">
+  <div class="card-title">📊 Daily Visits (Last 30 Days)</div>
+  {% set max_cnt = by_day|map(attribute='cnt')|max %}
+  <div class="visit-bar-wrap">
+    {% for row in by_day %}
+    <div class="visit-bar-row">
+      <div class="visit-bar-label">{{ row['day'][5:] }}</div>
+      <div class="visit-bar-track">
+        <div class="visit-bar-fill" style="width:{{ (row['cnt'] / max_cnt * 100)|int }}%"></div>
+      </div>
+      <div class="visit-bar-count">{{ row['cnt'] }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<div class="two-col">
+  <div class="card">
+    <div class="card-title">🌐 Top IPs</div>
+    <div class="item-list">
+      {% for row in by_ip %}
+      <div class="item-row">
+        <div class="item-info"><strong>{{ row['ip'] }}</strong></div>
+        <span class="tag">{{ row['cnt'] }} visits</span>
+      </div>
+      {% else %}
+      <div class="empty">No data yet.</div>
+      {% endfor %}
+    </div>
+  </div>
+
+  <div class="card">
+    <div class="card-title">🕒 Recent Visits</div>
+    <div class="item-list">
+      {% for v in recent %}
+      <div class="item-row" style="flex-direction:column;align-items:flex-start;gap:2px;">
+        <div style="display:flex;justify-content:space-between;width:100%">
+          <strong style="font-size:0.85rem;">{{ v['ip'] }}</strong>
+          <span style="font-size:0.72rem;color:var(--muted)">{{ v['visited_at'] }}</span>
+        </div>
+        <span style="font-size:0.72rem;color:var(--muted);word-break:break-all;">{{ v['user_agent'][:80] if v['user_agent'] }}…</span>
+      </div>
+      {% else %}
+      <div class="empty">No visits yet.</div>
+      {% endfor %}
+    </div>
+  </div>
+</div>
+
+{% endblock %}

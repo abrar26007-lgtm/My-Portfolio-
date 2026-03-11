@@ -1,0 +1,45 @@
+{% extends 'admin/base.html' %}
+{% block title %}Projects{% endblock %}
+{% block page_title %}Projects{% endblock %}
+{% block content %}
+<div class="two-col">
+  <div class="card">
+    <div class="card-title">➕ Add Project</div>
+    <form method="POST" enctype="multipart/form-data">
+      <input type="hidden" name="action" value="add">
+      <div class="form-row">
+        <div class="field full"><label>Project Title</label><input type="text" name="title" placeholder="My Awesome App" required></div>
+        <div class="field full"><label>Description</label><textarea name="description" rows="3" placeholder="What does this project do?"></textarea></div>
+        <div class="field full"><label>Project Image</label><input type="file" name="image" accept="image/*"></div>
+        <div class="field"><label>Tags (comma separated)</label><input type="text" name="tags" placeholder="Python, Flask, React"></div>
+        <div class="field"><label>Live Link</label><input type="url" name="link" placeholder="https://..."></div>
+        <div class="field full" style="flex-direction:row;align-items:center;gap:0.5rem;padding-top:0.25rem">
+          <input type="checkbox" name="featured" id="feat" style="width:auto">
+          <label for="feat" style="text-transform:none;font-size:0.9rem;letter-spacing:0">⭐ Mark as Featured</label>
+        </div>
+      </div>
+      <button type="submit" class="btn-primary" style="margin-top:0.75rem">Add Project →</button>
+    </form>
+  </div>
+  <div class="card">
+    <div class="card-title">📋 All Projects ({{ projects|length }})</div>
+    {% if projects %}
+    <div class="item-list">
+      {% for p in projects %}
+      <div class="item-row">
+        <div class="item-info">
+          {% if p['image'] %}<img src="{{ url_for('static', filename='uploads/' + p['image']) }}" style="width:40px;height:40px;object-fit:cover;border-radius:8px;flex-shrink:0">{% endif %}
+          <div>
+            <strong>{{ p['title'] }}</strong>
+            {% if p['featured'] %}<span class="tag" style="color:var(--yellow);border-color:var(--yellow)">⭐ Featured</span>{% endif %}
+            <p>{{ p['tags'] }}</p>
+          </div>
+        </div>
+        <form method="POST"><input type="hidden" name="action" value="delete"><input type="hidden" name="id" value="{{ p['id'] }}"><button type="submit" class="btn-delete" onclick="return confirm('Delete?')">✕</button></form>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}<div class="empty">No projects yet.</div>{% endif %}
+  </div>
+</div>
+{% endblock %}

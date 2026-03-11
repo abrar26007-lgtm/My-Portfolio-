@@ -1,0 +1,90 @@
+{% extends 'admin/base.html' %}
+{% block title %}Dashboard{% endblock %}
+{% block page_title %}Dashboard{% endblock %}
+{% block content %}
+
+<div class="stats-grid">
+  <div class="stat-card">
+    <div class="stat-icon">👁️</div>
+    <div class="stat-num" style="color:var(--accent)">{{ total_visits }}</div>
+    <div class="stat-label">Total Visitors</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">📅</div>
+    <div class="stat-num" style="color:var(--green)">{{ today_visits }}</div>
+    <div class="stat-label">Today</div>
+  </div>
+  <div class="stat-card">
+    <div class="stat-icon">🚀</div>
+    <div class="stat-num">{{ projects_count }}</div>
+    <div class="stat-label">Projects</div>
+  </div>
+  <div class="stat-card {% if unread > 0 %}alert{% endif %}">
+    <div class="stat-icon">✉️</div>
+    <div class="stat-num" style="{% if unread > 0 %}color:var(--yellow){% endif %}">{{ unread }}</div>
+    <div class="stat-label">Unread Msgs</div>
+  </div>
+</div>
+
+<!-- Visit chart -->
+{% if visit_chart %}
+<div class="card">
+  <div class="card-title">📊 Visitors — Last 7 Days</div>
+  {% set max_cnt = visit_chart|map(attribute='cnt')|max %}
+  <div class="visit-bar-wrap">
+    {% for row in visit_chart %}
+    <div class="visit-bar-row">
+      <div class="visit-bar-label">{{ row['day'][5:] }}</div>
+      <div class="visit-bar-track">
+        <div class="visit-bar-fill" style="width:{{ (row['cnt'] / max_cnt * 100)|int }}%"></div>
+      </div>
+      <div class="visit-bar-count">{{ row['cnt'] }}</div>
+    </div>
+    {% endfor %}
+  </div>
+</div>
+{% endif %}
+
+<!-- Quick actions -->
+<div class="card">
+  <div class="card-title">⚡ Quick Actions</div>
+  <div class="quick-grid">
+    <a href="{{ url_for('admin_profile') }}"      class="quick-btn">👤 Profile</a>
+    <a href="{{ url_for('admin_skills') }}"       class="quick-btn">⚡ Skills</a>
+    <a href="{{ url_for('admin_experience') }}"   class="quick-btn">💼 Experience</a>
+    <a href="{{ url_for('admin_education') }}"    class="quick-btn">🎓 Education</a>
+    <a href="{{ url_for('admin_projects') }}"     class="quick-btn">🚀 Projects</a>
+    <a href="{{ url_for('admin_achievements') }}" class="quick-btn">🏆 Achievements</a>
+    <a href="{{ url_for('admin_messages') }}"     class="quick-btn">✉️ Messages</a>
+    <a href="{{ url_for('admin_visits') }}"       class="quick-btn">📊 Visitors</a>
+    <a href="{{ url_for('admin_settings') }}"     class="quick-btn">⚙️ Settings</a>
+    <a href="{{ url_for('index') }}" target="_blank" class="quick-btn">🌐 View Site</a>
+  </div>
+</div>
+
+<!-- Recent messages -->
+<div class="card">
+  <div class="card-header">
+    <h2>📬 Recent Messages</h2>
+    <a href="{{ url_for('admin_messages') }}" class="btn-sm">View All →</a>
+  </div>
+  {% if recent_msgs %}
+  <div>
+    {% for m in recent_msgs %}
+    <div class="msg-row">
+      <div class="msg-info">
+        <strong>{{ m['name'] }}</strong>
+        <span>{{ m['email'] }}</span>
+        {% if m['subject'] %}<span style="color:var(--accent)">— {{ m['subject'] }}</span>{% endif %}
+      </div>
+      <div class="msg-preview">{{ m['message'][:100] }}{% if m['message']|length > 100 %}…{% endif %}</div>
+      <div class="msg-time">{{ m['created_at'] }}</div>
+    </div>
+    {% endfor %}
+  </div>
+  {% else %}
+  <div class="empty">No messages yet.</div>
+  {% endif %}
+</div>
+
+{% endblock %}

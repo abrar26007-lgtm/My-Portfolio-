@@ -1,0 +1,38 @@
+{% extends 'admin/base.html' %}
+{% block title %}Skills{% endblock %}
+{% block page_title %}Skills{% endblock %}
+{% block content %}
+<div class="two-col">
+  <div class="card">
+    <div class="card-title">➕ Add Skill</div>
+    <form method="POST">
+      <input type="hidden" name="action" value="add">
+      <div class="field" style="margin-bottom:1rem"><label>Skill Name</label><input type="text" name="name" placeholder="Python, React..." required></div>
+      <div class="field" style="margin-bottom:1rem"><label>Level (0–100)</label><input type="number" name="level" min="0" max="100" value="80" required></div>
+      <div class="field" style="margin-bottom:1.25rem"><label>Category</label><input type="text" name="category" value="Technical" placeholder="Technical / Soft Skills / Tools"></div>
+      <button type="submit" class="btn-primary">Add Skill →</button>
+    </form>
+  </div>
+  <div class="card">
+    <div class="card-title">📋 All Skills ({{ skills|length }})</div>
+    {% if skills %}
+    <div class="item-list">
+      {% for s in skills %}
+      <div class="item-row">
+        <div class="item-info">
+          <div>
+            <strong>{{ s['name'] }}</strong>
+            <div style="display:flex;gap:6px;margin-top:4px">
+              <span class="tag">{{ s['category'] }}</span>
+              <span class="tag" style="color:var(--accent)">{{ s['level'] }}%</span>
+            </div>
+          </div>
+        </div>
+        <form method="POST"><input type="hidden" name="action" value="delete"><input type="hidden" name="id" value="{{ s['id'] }}"><button type="submit" class="btn-delete" onclick="return confirm('Delete?')">✕</button></form>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}<div class="empty">No skills yet.</div>{% endif %}
+  </div>
+</div>
+{% endblock %}

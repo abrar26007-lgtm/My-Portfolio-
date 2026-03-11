@@ -1,0 +1,39 @@
+{% extends 'admin/base.html' %}
+{% block title %}Achievements{% endblock %}
+{% block page_title %}Achievements{% endblock %}
+{% block content %}
+<div class="two-col">
+  <div class="card">
+    <div class="card-title">➕ Add Achievement</div>
+    <form method="POST">
+      <input type="hidden" name="action" value="add">
+      <div class="form-row">
+        <div class="field full"><label>Title</label><input type="text" name="title" placeholder="Best Developer Award" required></div>
+        <div class="field full"><label>Description</label><textarea name="description" rows="3" placeholder="Describe this achievement..."></textarea></div>
+        <div class="field"><label>Year</label><input type="text" name="year" placeholder="2024"></div>
+        <div class="field"><label>Icon (Emoji)</label><input type="text" name="icon" value="🏆" placeholder="🏆 🎖️ 🥇 🎓"></div>
+      </div>
+      <button type="submit" class="btn-primary" style="margin-top:0.75rem">Add Achievement →</button>
+    </form>
+  </div>
+  <div class="card">
+    <div class="card-title">📋 All Achievements ({{ achievements|length }})</div>
+    {% if achievements %}
+    <div class="item-list">
+      {% for a in achievements %}
+      <div class="item-row">
+        <div class="item-info">
+          <span style="font-size:1.8rem">{{ a['icon'] }}</span>
+          <div>
+            <strong>{{ a['title'] }}</strong>
+            <div style="display:flex;gap:6px;margin-top:3px">{% if a['year'] %}<span class="tag">{{ a['year'] }}</span>{% endif %}</div>
+          </div>
+        </div>
+        <form method="POST"><input type="hidden" name="action" value="delete"><input type="hidden" name="id" value="{{ a['id'] }}"><button type="submit" class="btn-delete" onclick="return confirm('Delete?')">✕</button></form>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}<div class="empty">No achievements yet.</div>{% endif %}
+  </div>
+</div>
+{% endblock %}

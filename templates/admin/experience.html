@@ -1,0 +1,37 @@
+{% extends 'admin/base.html' %}
+{% block title %}Experience{% endblock %}
+{% block page_title %}Experience{% endblock %}
+{% block content %}
+<div class="two-col">
+  <div class="card">
+    <div class="card-title">➕ Add Experience</div>
+    <form method="POST">
+      <input type="hidden" name="action" value="add">
+      <div class="form-row">
+        <div class="field"><label>Company</label><input type="text" name="company" placeholder="Google, Meta..." required></div>
+        <div class="field"><label>Role / Position</label><input type="text" name="role" placeholder="Software Engineer" required></div>
+        <div class="field"><label>Duration</label><input type="text" name="duration" placeholder="Jan 2023 – Present" required></div>
+        <div class="field"><label>Order (higher = top)</label><input type="number" name="order_num" value="1"></div>
+        <div class="field full"><label>Description</label><textarea name="description" rows="4" placeholder="Responsibilities, achievements..."></textarea></div>
+      </div>
+      <button type="submit" class="btn-primary" style="margin-top:0.5rem">Add Experience →</button>
+    </form>
+  </div>
+  <div class="card">
+    <div class="card-title">📋 All Experience ({{ experience|length }})</div>
+    {% if experience %}
+    <div class="item-list">
+      {% for e in experience %}
+      <div class="item-row" style="align-items:flex-start">
+        <div class="item-info" style="flex-direction:column;align-items:flex-start">
+          <strong>{{ e['role'] }} @ {{ e['company'] }}</strong>
+          <p>{{ e['duration'] }}</p>
+        </div>
+        <form method="POST"><input type="hidden" name="action" value="delete"><input type="hidden" name="id" value="{{ e['id'] }}"><button type="submit" class="btn-delete" onclick="return confirm('Delete?')">✕</button></form>
+      </div>
+      {% endfor %}
+    </div>
+    {% else %}<div class="empty">No experience yet.</div>{% endif %}
+  </div>
+</div>
+{% endblock %}

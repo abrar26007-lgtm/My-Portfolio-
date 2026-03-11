@@ -1,0 +1,16 @@
+{% extends 'admin/base.html' %}
+{% block title %}Settings{% endblock %}
+{% block page_title %}Settings{% endblock %}
+{% block content %}
+<div class="card" style="max-width:480px">
+  <div class="card-title">🔐 Change Credentials</div>
+  {% if error %}<div class="alert error">{{ error }}</div>{% endif %}
+  {% if success %}<div class="alert success">{{ success }}</div>{% endif %}
+  <form method="POST">
+    <div class="field" style="margin-bottom:1rem"><label>New Username</label><input type="text" name="username" placeholder="admin" required></div>
+    <div class="field" style="margin-bottom:1rem"><label>New Password</label><input type="password" name="password" placeholder="Min 6 characters" required></div>
+    <div class="field" style="margin-bottom:1.25rem"><label>Confirm Password</label><input type="password" name="confirm" placeholder="Repeat password" required></div>
+    <button type="submit" class="btn-primary">Save Changes →</button>
+  </form>
+</div>
+{% endblock %}
