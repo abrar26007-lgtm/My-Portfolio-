@@ -1,0 +1,34 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Admin Login</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/admin.css') }}">
+</head>
+<body>
+<div class="bg-blobs">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+</div>
+<div class="login-page">
+  <div class="login-card glass">
+    <div class="login-logo">Admin<span>.</span></div>
+    <h2>Welcome Back</h2>
+    <p class="login-sub">Sign in to manage your portfolio</p>
+    {% if error %}<div class="alert error">❌ {{ error }}</div>{% endif %}
+    <form method="POST">
+      <div class="field"><label>Username</label><input type="text" name="username" placeholder="admin" required autofocus></div>
+      <div class="field"><label>Password</label><input type="password" name="password" placeholder="••••••••" required></div>
+      <button type="submit" class="btn-primary" style="width:100%">Sign In →</button>
+    </form>
+    <a href="{{ url_for('index') }}" class="back-link">← Back to site</a>
+    <a href="{{ url_for('reset_password') }}" class="back-link" style="margin-top:0.5rem;">🔑 Forgot Password?</a>
+  </div>
+</div>
+<script src="{{ url_for('static', filename='js/admin.js') }}"></script>
+</body>
+</html>

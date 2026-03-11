@@ -1,1 +1,347 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>{{ profile['name'] }} — Portfolio</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&family=Playfair+Display:ital,wght@0,700;1,400&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}">
+</head>
+<body>
 
+<!-- Background blobs -->
+<div class="bg-blobs">
+  <div class="blob blob-1"></div>
+  <div class="blob blob-2"></div>
+  <div class="blob blob-3"></div>
+  <div class="blob blob-4"></div>
+</div>
+
+<!-- Navbar -->
+<nav class="navbar glass">
+  <div class="nav-inner">
+    <a href="#" class="nav-logo">{{ profile['name'].split()[0] if profile['name'] else 'Portfolio' }}<span>.</span></a>
+    <ul class="nav-links">
+      <li><a href="#about">About</a></li>
+      <li><a href="#skills">Skills</a></li>
+      <li><a href="#experience">Experience</a></li>
+      <li><a href="#projects">Projects</a></li>
+      <li><a href="#achievements">Awards</a></li>
+      <li><a href="#contact">Contact</a></li>
+    </ul>
+    <button class="hamburger" id="hamburger">
+      <span></span><span></span><span></span>
+    </button>
+  </div>
+</nav>
+
+<!-- Mobile menu -->
+<div class="mobile-menu glass" id="mobileMenu">
+  <a href="#about" class="mobile-link">About</a>
+  <a href="#skills" class="mobile-link">Skills</a>
+  <a href="#experience" class="mobile-link">Experience</a>
+  <a href="#projects" class="mobile-link">Projects</a>
+  <a href="#achievements" class="mobile-link">Awards</a>
+  <a href="#contact" class="mobile-link">Contact</a>
+</div>
+
+<!-- Hero -->
+<section class="hero" id="about">
+  <div class="hero-content">
+    <div class="hero-text fade-up">
+      <div class="hero-badge glass">👋 Available for work</div>
+      <h1 class="hero-name">Hi, I'm<br><span class="gradient-text">{{ profile['name'] }}</span></h1>
+      <h2 class="hero-title">{{ profile['title'] }}</h2>
+      <p class="hero-tagline">{{ profile['tagline'] }}</p>
+      <p class="hero-bio">{{ profile['bio'] }}</p>
+      <div class="hero-buttons">
+        <a href="#contact" class="btn-primary">Get In Touch</a>
+        <a href="#projects" class="btn-glass">View Work ↓</a>
+      </div>
+      <div class="hero-socials">
+        {% if profile['github'] %}<a href="{{ profile['github'] }}" target="_blank" class="social-pill" style="--sc:#24292e"><span class="sp-dot" style="background:#fff"></span>GitHub</a>{% endif %}
+        {% if profile['linkedin'] %}<a href="{{ profile['linkedin'] }}" target="_blank" class="social-pill" style="--sc:#0077b5"><span class="sp-dot" style="background:#fff"></span>LinkedIn</a>{% endif %}
+        {% if profile['twitter'] %}<a href="{{ profile['twitter'] }}" target="_blank" class="social-pill" style="--sc:#1a1a1a"><span class="sp-dot" style="background:#fff"></span>Twitter / X</a>{% endif %}
+        {% if profile['facebook'] %}<a href="{{ profile['facebook'] }}" target="_blank" class="social-pill" style="--sc:#1877f2"><span class="sp-dot" style="background:#fff"></span>Facebook</a>{% endif %}
+        {% if profile['instagram'] %}<a href="{{ profile['instagram'] }}" target="_blank" class="social-pill" style="--sc:#e1306c"><span class="sp-dot" style="background:#fff"></span>Instagram</a>{% endif %}
+        {% if profile['youtube'] %}<a href="{{ profile['youtube'] }}" target="_blank" class="social-pill" style="--sc:#ff0000"><span class="sp-dot" style="background:#fff"></span>YouTube</a>{% endif %}
+        {% if profile['tiktok'] %}<a href="{{ profile['tiktok'] }}" target="_blank" class="social-pill" style="--sc:#010101"><span class="sp-dot" style="background:#69c9d0"></span>TikTok</a>{% endif %}
+        {% if profile['telegram'] %}<a href="{{ profile['telegram'] }}" target="_blank" class="social-pill" style="--sc:#229ed9"><span class="sp-dot" style="background:#fff"></span>Telegram</a>{% endif %}
+        {% if profile['whatsapp'] %}<a href="{{ profile['whatsapp'] }}" target="_blank" class="social-pill" style="--sc:#25d366"><span class="sp-dot" style="background:#fff"></span>WhatsApp</a>{% endif %}
+        {% if profile['discord'] %}<a href="{{ profile['discord'] }}" target="_blank" class="social-pill" style="--sc:#5865f2"><span class="sp-dot" style="background:#fff"></span>Discord</a>{% endif %}
+        {% if profile['fiverr'] %}<a href="{{ profile['fiverr'] }}" target="_blank" class="social-pill" style="--sc:#1dbf73"><span class="sp-dot" style="background:#fff"></span>Fiverr</a>{% endif %}
+        {% if profile['upwork'] %}<a href="{{ profile['upwork'] }}" target="_blank" class="social-pill" style="--sc:#6fda44"><span class="sp-dot" style="background:#fff"></span>Upwork</a>{% endif %}
+        {% if profile['stackoverflow'] %}<a href="{{ profile['stackoverflow'] }}" target="_blank" class="social-pill" style="--sc:#f48024"><span class="sp-dot" style="background:#fff"></span>Stack Overflow</a>{% endif %}
+        {% if profile['behance'] %}<a href="{{ profile['behance'] }}" target="_blank" class="social-pill" style="--sc:#1769ff"><span class="sp-dot" style="background:#fff"></span>Behance</a>{% endif %}
+        {% if profile['dribbble'] %}<a href="{{ profile['dribbble'] }}" target="_blank" class="social-pill" style="--sc:#ea4c89"><span class="sp-dot" style="background:#fff"></span>Dribbble</a>{% endif %}
+        {% if profile['medium'] %}<a href="{{ profile['medium'] }}" target="_blank" class="social-pill" style="--sc:#000"><span class="sp-dot" style="background:#fff"></span>Medium</a>{% endif %}
+        {% if profile['hashnode'] %}<a href="{{ profile['hashnode'] }}" target="_blank" class="social-pill" style="--sc:#2962ff"><span class="sp-dot" style="background:#fff"></span>Hashnode</a>{% endif %}
+        {% if profile['website'] %}<a href="{{ profile['website'] }}" target="_blank" class="social-pill" style="--sc:#7c6dfa"><span class="sp-dot" style="background:#fff"></span>Website ↗</a>{% endif %}
+        {% if profile['resume'] %}<a href="{{ profile['resume'] }}" target="_blank" class="social-pill" style="--sc:#fa6d9a"><span class="sp-dot" style="background:#fff"></span>Resume ↓</a>{% endif %}
+      </div>
+    </div>
+    <div class="hero-photo fade-up-delay">
+      <div class="photo-ring">
+        <div class="photo-glow"></div>
+        {% if profile['photo'] %}
+        <img src="{{ url_for('static', filename='uploads/' + profile['photo']) }}" alt="{{ profile['name'] }}" class="profile-img">
+        {% else %}
+        <div class="photo-placeholder">
+          <span>{{ profile['name'][0] if profile['name'] else '?' }}</span>
+        </div>
+        {% endif %}
+      </div>
+      <div class="floating-card glass card-1">
+        <span class="card-icon">💼</span>
+        <div>
+          <div class="card-label">Experience</div>
+          <div class="card-value">{{ experience|length }}+ Years</div>
+        </div>
+      </div>
+      <div class="floating-card glass card-2">
+        <span class="card-icon">🚀</span>
+        <div>
+          <div class="card-label">Projects</div>
+          <div class="card-value">{{ projects|length }}+</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Info bar -->
+  <div class="info-bar">
+    <div class="info-item glass">
+      <span class="info-icon">📍</span>
+      <span>{{ profile['location'] }}</span>
+    </div>
+    <div class="info-item glass">
+      <span class="info-icon">📧</span>
+      <span>{{ profile['email'] }}</span>
+    </div>
+    <div class="info-item glass">
+      <span class="info-icon">📞</span>
+      <span>{{ profile['phone'] }}</span>
+    </div>
+  </div>
+</section>
+
+<!-- Skills -->
+<section class="section" id="skills">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">What I Know</div>
+      <h2 class="section-title">My <span class="gradient-text">Skills</span></h2>
+    </div>
+    {% set categories = skills | map(attribute='category') | unique | list %}
+    {% for cat in categories %}
+    <div class="skill-group">
+      <h3 class="skill-cat-title">{{ cat }}</h3>
+      <div class="skills-grid">
+        {% for skill in skills if skill['category'] == cat %}
+        <div class="skill-card glass">
+          <div class="skill-header">
+            <span class="skill-name">{{ skill['name'] }}</span>
+            <span class="skill-percent">{{ skill['level'] }}%</span>
+          </div>
+          <div class="skill-bar">
+            <div class="skill-fill" style="--width: {{ skill['level'] }}%"></div>
+          </div>
+        </div>
+        {% endfor %}
+      </div>
+    </div>
+    {% endfor %}
+    {% if not skills %}
+    <p class="empty-msg">No skills added yet.</p>
+    {% endif %}
+  </div>
+</section>
+
+<!-- Experience -->
+{% if experience %}
+<section class="section" id="experience">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Work History</div>
+      <h2 class="section-title">My <span class="gradient-text">Experience</span></h2>
+    </div>
+    <div class="timeline">
+      {% for exp in experience %}
+      <div class="timeline-item">
+        <div class="timeline-dot"></div>
+        <div class="timeline-card glass">
+          <div class="exp-header">
+            <div>
+              <h3 class="exp-role">{{ exp['role'] }}</h3>
+              <div class="exp-company">{{ exp['company'] }}</div>
+            </div>
+            <div class="exp-duration glass">{{ exp['duration'] }}</div>
+          </div>
+          {% if exp['description'] %}
+          <p class="exp-desc">{{ exp['description'] }}</p>
+          {% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Projects -->
+<section class="section" id="projects">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">My Work</div>
+      <h2 class="section-title">Recent <span class="gradient-text">Projects</span></h2>
+    </div>
+    <div class="projects-grid">
+      {% if projects %}
+        {% for project in projects %}
+        <div class="project-card glass {% if project['featured'] %}featured{% endif %}">
+          {% if project['featured'] %}<div class="featured-badge">⭐ Featured</div>{% endif %}
+          {% if project['image'] %}
+          <div class="project-img-wrap">
+            <img src="{{ url_for('static', filename='uploads/' + project['image']) }}" alt="{{ project['title'] }}" class="project-img">
+          </div>
+          {% endif %}
+          <div class="project-body">
+            <h3 class="project-title">{{ project['title'] }}</h3>
+            <p class="project-desc">{{ project['description'] }}</p>
+            {% if project['tags'] %}
+            <div class="project-tags">
+              {% for tag in project['tags'].split(',') %}
+              <span class="tag">{{ tag.strip() }}</span>
+              {% endfor %}
+            </div>
+            {% endif %}
+            {% if project['link'] and project['link'] != '#' %}
+            <a href="{{ project['link'] }}" target="_blank" class="project-link">View Project ↗</a>
+            {% endif %}
+          </div>
+        </div>
+        {% endfor %}
+      {% else %}
+      <p class="empty-msg">No projects added yet.</p>
+      {% endif %}
+    </div>
+  </div>
+</section>
+
+<!-- Achievements -->
+{% if achievements %}
+<section class="section" id="achievements">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Recognition</div>
+      <h2 class="section-title">My <span class="gradient-text">Achievements</span></h2>
+    </div>
+    <div class="achievements-grid">
+      {% for ach in achievements %}
+      <div class="ach-card glass">
+        <div class="ach-icon">{{ ach['icon'] }}</div>
+        <div class="ach-content">
+          <h3 class="ach-title">{{ ach['title'] }}</h3>
+          <p class="ach-desc">{{ ach['description'] }}</p>
+          {% if ach['year'] %}<div class="ach-year">{{ ach['year'] }}</div>{% endif %}
+        </div>
+      </div>
+      {% endfor %}
+    </div>
+  </div>
+</section>
+{% endif %}
+
+<!-- Contact -->
+<section class="section" id="contact">
+  <div class="container">
+    <div class="section-header">
+      <div class="section-tag">Get In Touch</div>
+      <h2 class="section-title">Contact <span class="gradient-text">Me</span></h2>
+    </div>
+    <div class="contact-layout">
+      <div class="contact-info">
+        <div class="contact-card glass">
+          <div class="contact-item">
+            <div class="contact-icon">📧</div>
+            <div>
+              <div class="contact-label">Email</div>
+              <div class="contact-value">{{ profile['email'] }}</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📞</div>
+            <div>
+              <div class="contact-label">Phone</div>
+              <div class="contact-value">{{ profile['phone'] }}</div>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-icon">📍</div>
+            <div>
+              <div class="contact-label">Location</div>
+              <div class="contact-value">{{ profile['location'] }}</div>
+            </div>
+          </div>
+        </div>
+      </div>
+      <form class="contact-form glass" id="contactForm">
+        <div class="form-row">
+          <div class="field">
+            <label>Your Name</label>
+            <input type="text" name="name" placeholder="John Doe" required>
+          </div>
+          <div class="field">
+            <label>Email</label>
+            <input type="email" name="email" placeholder="john@email.com" required>
+          </div>
+        </div>
+        <div class="field">
+          <label>Subject</label>
+          <input type="text" name="subject" placeholder="Project Inquiry">
+        </div>
+        <div class="field">
+          <label>Message</label>
+          <textarea name="message" rows="5" placeholder="Tell me about your project..." required></textarea>
+        </div>
+        <input type="hidden" name="recaptcha_token" id="recaptchaToken">
+        <button type="submit" class="btn-primary" id="sendBtn">Send Message ✉</button>
+        <div class="form-msg" id="formMsg"></div>
+      </form>
+    </div>
+  </div>
+</section>
+
+<!-- Footer -->
+<footer class="footer glass">
+  <div class="footer-inner">
+    <div class="footer-left">
+      <span class="nav-logo">{{ profile['name'].split()[0] if profile['name'] else 'Portfolio' }}<span style="color:var(--accent)">.</span></span>
+      <p>© 2024 {{ profile['name'] }}. All rights reserved.</p>
+    </div>
+    <div class="footer-socials">
+      {% if profile['github'] %}<a href="{{ profile['github'] }}" target="_blank" title="GitHub">🐙</a>{% endif %}
+      {% if profile['linkedin'] %}<a href="{{ profile['linkedin'] }}" target="_blank" title="LinkedIn">💼</a>{% endif %}
+      {% if profile['twitter'] %}<a href="{{ profile['twitter'] }}" target="_blank" title="Twitter">🐦</a>{% endif %}
+      {% if profile['facebook'] %}<a href="{{ profile['facebook'] }}" target="_blank" title="Facebook">📘</a>{% endif %}
+      {% if profile['instagram'] %}<a href="{{ profile['instagram'] }}" target="_blank" title="Instagram">📸</a>{% endif %}
+      {% if profile['youtube'] %}<a href="{{ profile['youtube'] }}" target="_blank" title="YouTube">▶️</a>{% endif %}
+      {% if profile['tiktok'] %}<a href="{{ profile['tiktok'] }}" target="_blank" title="TikTok">🎵</a>{% endif %}
+      {% if profile['telegram'] %}<a href="{{ profile['telegram'] }}" target="_blank" title="Telegram">✈️</a>{% endif %}
+      {% if profile['whatsapp'] %}<a href="{{ profile['whatsapp'] }}" target="_blank" title="WhatsApp">💬</a>{% endif %}
+      {% if profile['fiverr'] %}<a href="{{ profile['fiverr'] }}" target="_blank" title="Fiverr">🟢</a>{% endif %}
+      {% if profile['upwork'] %}<a href="{{ profile['upwork'] }}" target="_blank" title="Upwork">🔵</a>{% endif %}
+      {% if profile['behance'] %}<a href="{{ profile['behance'] }}" target="_blank" title="Behance">🎯</a>{% endif %}
+      {% if profile['dribbble'] %}<a href="{{ profile['dribbble'] }}" target="_blank" title="Dribbble">🏀</a>{% endif %}
+    </div>
+    <div class="footer-right">
+      <a href="{{ url_for('login') }}" class="footer-admin">Admin ↗</a>
+    </div>
+  </div>
+</footer>
+
+<script src="https://www.google.com/recaptcha/api.js?render={{ config['RECAPTCHA_SITE_KEY'] }}"></script>
+<script src="{{ url_for('static', filename='js/main.js') }}"></script>
+</body>
+</html>
